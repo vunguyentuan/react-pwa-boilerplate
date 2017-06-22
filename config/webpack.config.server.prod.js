@@ -3,7 +3,6 @@
 const path = require('path')
 const paths = require('./paths')
 const nodeExternals = require('webpack-node-externals')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
@@ -12,10 +11,8 @@ module.exports = {
   target: 'node',
   // Don't attempt to continue if there are any errors.
   bail: true,
+  devtool: 'cheap-module-source-map',
   entry: [paths.serverIndexJs],
-  // We generate sourcemaps in production. This is slow but gives good results.
-  // You can exclude the *.map files from the build during deployment.
-  devtool: 'source-map',
   output: {
     // The build folder.
     path: paths.appBackend,
@@ -87,7 +84,6 @@ module.exports = {
             loader: require.resolve('css-loader'),
             options: {
               importLoaders: 1,
-              minimize: true,
               modules: true,
               localIdentName: '[name]_[local]_[hash:base64:5]'
             }
