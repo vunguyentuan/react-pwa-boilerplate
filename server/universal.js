@@ -5,13 +5,15 @@ import { StaticRouter } from 'react-router'
 import { configureStore } from '../src/redux'
 import { Provider } from 'react-redux'
 import App from '../src/components/App'
-import WithStylesContext from '../src/helpers/WithStylesContext'
+import WithContext from '../src/helpers/WithContext'
+import { matchPath } from 'react-router-dom'
+import routes from '../src/routes'
 
 import path from 'path'
 import fs from 'fs'
 
 export default function universalLoader(req, res) {
-  const filePath = path.resolve('./build/frontend/build.html')
+  const filePath = path.resolve('./build/backend/template.ejs')
 
   fs.readFile(filePath, 'utf8', (err, htmlData) => {
     if (err) {
@@ -20,13 +22,25 @@ export default function universalLoader(req, res) {
     }
 
     const css = [] // CSS for all rendered React components
+    const dataLoaders = []
+    routes.some(route => {
+      const match = matchPath(req.url, route)
+      if (match) {
+        dataLoaders.push(route.loadData(match))
+      }
+
+      return match
+    })
+
     const context = {}
 
-    let store = configureStore()
-    const html = renderToString(
+    const store = configureStore()
+    const getHTML = () => renderToString(
       createElement(
-        WithStylesContext,
-        { onInsertCss: styles => css.push(styles._getCss()) },
+        WithContext,
+        {
+          onInsertCss: styles => css.push(styles._getCss())
+        },
         createElement(
           Provider,
           { store },
@@ -39,16 +53,28 @@ export default function universalLoader(req, res) {
       )
     )
 
-    if (context.url) {
-      res.writeHead(301, {
-        Location: context.url
-      })
-      res.end()
-    } else {
-      const criticalHTML = htmlData
-        .replace('{{SSR}}', html)
-        .replace('<inline_style_here/>', `<style>${css.join('')}</style>`)
-      res.send(criticalHTML)
-    }
+    // preload data
+    Promise.all(
+      dataLoaders.map(action => action(store))
+    ).then(data => {
+      if (context.url) {
+        res.writeHead(301, {
+          Location: context.url
+        })
+        res.end()
+      } else {
+        // get html with data
+        const html = getHTML()
+
+        const __INITIAL_STATE__ = JSON.stringify(store.getState())
+        const inlineStyles = css.join('')
+
+        const criticalHTML = htmlData
+          .replace('[SSR]', html)
+          .replace('[INLINE_STYLE]', inlineStyles)
+          .replace('[INITIAL_STATE]', __INITIAL_STATE__)
+        res.send(criticalHTML)
+      }
+    })
   })
 }

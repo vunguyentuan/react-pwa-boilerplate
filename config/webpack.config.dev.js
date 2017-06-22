@@ -180,7 +180,7 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          'isomorphic-style-loader',
+          'style-loader',
           {
             loader: require.resolve('css-loader'),
             options: {

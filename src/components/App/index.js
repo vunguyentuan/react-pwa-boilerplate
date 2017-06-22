@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import logo from './logo.svg'
 import styles from './App.css'
 import { Helmet } from 'react-helmet'
-import { Route } from 'react-router'
-import Home from '../Home'
-import About from '../About'
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import { Route, Switch } from 'react-router'
+import routes from '../../routes'
+import withStyles from 'isomorphic-style-loader/lib/withStyles'
 
 class App extends Component {
   render() {
@@ -19,8 +18,9 @@ class App extends Component {
           <img src={logo} className={styles.AppLogo} alt="logo" />
           <h2>Welcome to React</h2>
         </div>
-        <Route path='/' exact component={Home}/>
-        <Route path='/about' exact component={About}/>
+        <Switch>
+          {routes.map((route, index) => <Route key={index} {...route} />)}
+        </Switch>
       </div>
     )
   }

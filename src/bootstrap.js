@@ -3,20 +3,20 @@ import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import { configureStore } from './redux'
 import App from './components/App'
-import WithStylesContext from './helpers/WithStylesContext'
+import WithContext from './helpers/WithContext'
 
-const store = configureStore()
-const identity = styles => styles
+const store = configureStore(window.__INITIAL_STATE__)
+const identity = data => data
 
 const Bootstrap = () => {
   return (
-    <WithStylesContext onInsertCss={identity}>
+    <WithContext onInsertCss={identity} onAddLoader={identity}>
       <Provider store={store}>
         <BrowserRouter>
           <App />
         </BrowserRouter>
       </Provider>
-    </WithStylesContext>
+    </WithContext>
   )
 }
 

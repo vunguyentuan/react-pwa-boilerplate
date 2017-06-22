@@ -1,4 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux'
+import Immutable from 'seamless-immutable'
 import thunk from 'redux-thunk'
 import rootReducer from './reducers'
 
@@ -19,5 +20,11 @@ export const configureStore = (initialState, reducer = rootReducer) => {
     applyMiddleware(...middlewares)
   ]
 
-  return createStore(reducer, initialState, compose(...enhancers))
+  // convert plain object to immutable
+  const immutaleState = initialState ? Object.keys(initialState).reduce((finalState, key) => {
+    finalState[key] = Immutable.from(initialState[key])
+    return finalState
+  }, {}) : undefined
+
+  return createStore(reducer, immutaleState, compose(...enhancers))
 }
