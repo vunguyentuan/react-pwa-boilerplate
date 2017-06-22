@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
-import logo from './logo.svg'
-import styles from './App.css'
-import { Route, Switch } from 'react-router'
-import routes from '../../routes'
-import withStyles from 'isomorphic-style-loader/lib/withStyles'
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import styles from './App.css';
+import { Route, Switch } from 'react-router';
+import routes from '../../routes';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 class App extends Component {
   render() {
@@ -17,8 +17,8 @@ class App extends Component {
           {routes.map((route, index) => <Route key={index} {...route} />)}
         </Switch>
       </div>
-    )
+    );
   }
 }
 
-export default withStyles(styles)(App)
+export default withStyles(styles)(App);

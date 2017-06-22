@@ -8,8 +8,7 @@
       "error",
       {
         "singleQuote": true,
-        "semi": false,
-        "trailingComma": "all",
+        "trailingComma": "es5",
         "jsxBracketSameLine": true,
         "parser": "flow"
       }

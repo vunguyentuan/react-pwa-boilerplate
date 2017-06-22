@@ -1,7 +1,7 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-import { connect } from 'react-redux'
-import { Helmet } from 'react-helmet'
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
 const Home = ({ increase, counter }) => {
   return (
     <div>
@@ -15,14 +15,14 @@ const Home = ({ increase, counter }) => {
       <button onClick={event => increase()}>Counter {counter}</button>
       <NavLink to="/about">About</NavLink>
     </div>
-  )
-}
+  );
+};
 
 export default connect(
   state => {
     return {
       counter: state.user.counter,
-    }
+    };
   },
   dispatch => {
     return {
@@ -30,6 +30,6 @@ export default connect(
         dispatch({
           type: 'INCREASE_COUNTER',
         }),
-    }
-  },
-)(Home)
+    };
+  }
+)(Home);

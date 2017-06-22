@@ -1,8 +1,8 @@
-'use strict'
+'use strict';
 
-const path = require('path')
-const paths = require('./paths')
-const nodeExternals = require('webpack-node-externals')
+const path = require('path');
+const paths = require('./paths');
+const nodeExternals = require('webpack-node-externals');
 
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
@@ -28,7 +28,7 @@ module.exports = {
     // https://github.com/facebookincubator/create-react-app/issues/253
     modules: ['node_modules', paths.appNodeModules].concat(
       // It is guaranteed to exist because we tweak it in `env.js`
-      process.env.NODE_PATH.split(path.delimiter).filter(Boolean),
+      process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
     ),
     // These are the reasonable defaults supported by the Node ecosystem.
     // We also include JSX as a common component filename extension to support
@@ -94,4 +94,4 @@ module.exports = {
     ],
   },
   externals: [nodeExternals()],
-}
+};

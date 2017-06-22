@@ -1,5 +1,5 @@
-import Home from './pages/Home'
-import About from './pages/About'
+import Home from './pages/Home';
+import About from './pages/About';
 
 const routes = [
   {
@@ -7,7 +7,7 @@ const routes = [
     component: Home,
     exact: true,
     loadData: match => store => {
-      return store.dispatch({ type: 'INCREASE_COUNTER' })
+      return store.dispatch({ type: 'INCREASE_COUNTER' });
     },
   },
   {
@@ -16,6 +16,6 @@ const routes = [
     exact: true,
     loadData: match => store => {},
   },
-]
+];
 
-export default routes
+export default routes;

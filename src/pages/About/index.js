@@ -1,5 +1,5 @@
-import React from 'react'
-import { Helmet } from 'react-helmet'
+import React from 'react';
+import { Helmet } from 'react-helmet';
 
 const About = () => {
   return (
@@ -11,7 +11,7 @@ const About = () => {
         About
       </p>
     </div>
-  )
-}
+  );
+};
 
-export default About
+export default About;

@@ -1,30 +1,32 @@
-import { createStore, applyMiddleware, compose } from 'redux'
-import Immutable from 'seamless-immutable'
-import thunk from 'redux-thunk'
-import rootReducer from './reducers'
+import { createStore, applyMiddleware, compose } from 'redux';
+import Immutable from 'seamless-immutable';
+import thunk from 'redux-thunk';
+import array from './middlewares/array';
+import promise from './middlewares/promise';
+import rootReducer from './reducers';
 
 export const configureStore = (initialState, reducer = rootReducer) => {
-  const middlewares = [thunk]
+  const middlewares = [thunk, promise, array];
 
   if (process.env.NODE_ENV === 'development') {
-    const reduxLogger = require('redux-logger')
+    const reduxLogger = require('redux-logger');
 
     const logger = reduxLogger.createLogger({
       collapsed: true,
-    })
+    });
 
-    middlewares.push(logger)
+    middlewares.push(logger);
   }
 
-  const enhancers = [applyMiddleware(...middlewares)]
+  const enhancers = [applyMiddleware(...middlewares)];
 
   // convert plain object to immutable
   const immutaleState = initialState
     ? Object.keys(initialState).reduce((finalState, key) => {
-        finalState[key] = Immutable.from(initialState[key])
-        return finalState
+        finalState[key] = Immutable.from(initialState[key]);
+        return finalState;
       }, {})
-    : undefined
+    : undefined;
 
-  return createStore(reducer, immutaleState, compose(...enhancers))
-}
+  return createStore(reducer, immutaleState, compose(...enhancers));
+};
