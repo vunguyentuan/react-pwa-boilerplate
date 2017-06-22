@@ -6,7 +6,6 @@ import { configureStore } from './redux'
 import App from './components/App'
 import WithStylesContext from './helpers/WithStylesContext'
 // import registerServiceWorker from './registerServiceWorker'
-// import './styles/index.css'
 
 const store = configureStore()
 
