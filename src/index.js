@@ -8,10 +8,11 @@ import WithStylesContext from './helpers/WithStylesContext'
 // import registerServiceWorker from './registerServiceWorker'
 
 const store = configureStore()
+const identity = styles => styles
 
 const Bootstrap = () => {
   return (
-    <WithStylesContext onInsertCss={styles => styles._insertCss()}>
+    <WithStylesContext onInsertCss={identity}>
       <Provider store={store}>
         <BrowserRouter>
           <App />
