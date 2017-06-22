@@ -49,6 +49,7 @@
     "ignore-loader": "^0.1.2",
     "isomorphic-style-loader": "^2.0.0",
     "jest": "^20.0.4",
+    "npm-run-all": "^4.0.2",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.0.0",
     "postcss-loader": "^2.0.6",
@@ -65,9 +66,10 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "start": "node scripts/start.js",
-    "start:server": "NODE_ENV=development node server/index.js",
-    "build": "node scripts/build.js",
+    "dev": "node scripts/start.js",
+    "start": "NODE_ENV=production node build/backend/server.js",
+    "build": "npm-run-all --parallel build:client build:server",
+    "build:client": "node scripts/build.js",
     "build:server": "node scripts/build-server.js",
     "test": "node scripts/test.js --env=jsdom"
   },
