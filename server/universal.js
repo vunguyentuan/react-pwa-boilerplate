@@ -41,7 +41,7 @@ export default function universalLoader(req, res) {
         createElement(
           WithContext,
           {
-            onInsertCss: styles => css.push(styles._getCss())
+            onInsertCss: styles => css.push(styles._getCss()),
           },
           createElement(
             Provider,
@@ -49,17 +49,17 @@ export default function universalLoader(req, res) {
             createElement(
               StaticRouter,
               { location: req.url, context },
-              createElement(App)
-            )
-          )
-        )
+              createElement(App),
+            ),
+          ),
+        ),
       )
 
     // preload data
     Promise.all(dataLoaders.map(action => action(store))).then(data => {
       if (context.url) {
         res.writeHead(301, {
-          Location: context.url
+          Location: context.url,
         })
         res.end()
       } else {
@@ -73,7 +73,7 @@ export default function universalLoader(req, res) {
         const metaData = [
           helmet.title.toString(),
           helmet.meta.toString(),
-          helmet.link.toString()
+          helmet.link.toString(),
         ].join('')
 
         const criticalHTML = htmlData

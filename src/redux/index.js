@@ -10,21 +10,21 @@ export const configureStore = (initialState, reducer = rootReducer) => {
     const reduxLogger = require('redux-logger')
 
     const logger = reduxLogger.createLogger({
-      collapsed: true
+      collapsed: true,
     })
 
     middlewares.push(logger)
   }
 
-  const enhancers = [
-    applyMiddleware(...middlewares)
-  ]
+  const enhancers = [applyMiddleware(...middlewares)]
 
   // convert plain object to immutable
-  const immutaleState = initialState ? Object.keys(initialState).reduce((finalState, key) => {
-    finalState[key] = Immutable.from(initialState[key])
-    return finalState
-  }, {}) : undefined
+  const immutaleState = initialState
+    ? Object.keys(initialState).reduce((finalState, key) => {
+        finalState[key] = Immutable.from(initialState[key])
+        return finalState
+      }, {})
+    : undefined
 
   return createStore(reducer, immutaleState, compose(...enhancers))
 }

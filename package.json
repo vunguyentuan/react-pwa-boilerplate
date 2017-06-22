@@ -43,6 +43,7 @@
     "eslint-plugin-flowtype": "^2.34.0",
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-jsx-a11y": "5.0.3",
+    "eslint-plugin-prettier": "^2.1.2",
     "eslint-plugin-react": "^7.1.0",
     "extract-text-webpack-plugin": "^2.1.2",
     "file-loader": "^0.11.2",
@@ -50,14 +51,17 @@
     "flow-typed": "^2.1.2",
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "2.28.0",
+    "husky": "^0.13.4",
     "ignore-loader": "^0.1.2",
     "isomorphic-style-loader": "^2.0.0",
     "jest": "^20.0.4",
+    "lint-staged": "^4.0.0",
     "npm-run-all": "^4.0.2",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.0.0",
     "postcss-loader": "^2.0.6",
     "preload-webpack-plugin": "^1.2.2",
+    "prettier": "^1.4.4",
     "promise": "^8.0.0",
     "react-dev-utils": "^3.0.0",
     "react-error-overlay": "^1.0.7",
@@ -78,6 +82,7 @@
     "build:server": "node scripts/build-server.js",
     "flow": "flow",
     "flow-typed": "flow-typed",
+    "format-js": "prettier --parser flow --jsx-bracket-same-line --single-quote --no-semi --trailing-comma all --write '{,!(node_modules|public|build|flow-typed)/**/}*.js'",
     "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {
@@ -110,7 +115,10 @@
       "react-app"
     ]
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "lint-staged": {
+    "src/**/*.js": [
+      "prettier --parser flow --jsx-bracket-same-line --single-quote --no-semi --trailing-comma all --write",
+      "git add"
+    ]
   }
 }

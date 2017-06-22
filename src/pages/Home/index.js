@@ -21,15 +21,15 @@ const Home = ({ increase, counter }) => {
 export default connect(
   state => {
     return {
-      counter: state.user.counter
+      counter: state.user.counter,
     }
   },
   dispatch => {
     return {
       increase: data =>
         dispatch({
-          type: 'INCREASE_COUNTER'
-        })
+          type: 'INCREASE_COUNTER',
+        }),
     }
-  }
+  },
 )(Home)

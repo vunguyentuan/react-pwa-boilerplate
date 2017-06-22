@@ -8,14 +8,14 @@ const routes = [
     exact: true,
     loadData: match => store => {
       return store.dispatch({ type: 'INCREASE_COUNTER' })
-    }
+    },
   },
   {
     path: '/about',
     component: About,
     exact: true,
-    loadData: match => store => {}
-  }
+    loadData: match => store => {},
+  },
 ]
 
 export default routes

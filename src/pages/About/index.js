@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import { Helmet } from 'react-helmet'
 
 const About = () => {
@@ -11,7 +11,7 @@ const About = () => {
         About
       </p>
     </div>
-  );
-};
+  )
+}
 
-export default About;
+export default About
