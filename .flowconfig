@@ -1,7 +1,13 @@
 [ignore]
+.*/build/.*
 
 [include]
+.*/src/.*
 
 [libs]
+flow-typed
+./interfaces/global.js
 
 [options]
+module.name_mapper='.*\(.css\)' -> 'CSSModule'
+module.system=haste
