@@ -1,20 +1,26 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
+import { BrowserRouter } from 'react-router-dom'
 import { configureStore } from './redux'
-import App from './components/App';
-import registerServiceWorker from './registerServiceWorker';
-import './styles/index.css';
+import App from './components/App'
+import WithStylesContext from './helpers/WithStylesContext'
+// import registerServiceWorker from './registerServiceWorker'
+// import './styles/index.css'
 
 const store = configureStore()
 
 const Bootstrap = () => {
   return (
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <WithStylesContext onInsertCss={styles => styles._insertCss()}>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
+    </WithStylesContext>
   )
 }
 
-ReactDOM.render(<Bootstrap />, document.getElementById('root'));
-registerServiceWorker();
+ReactDOM.render(<Bootstrap />, document.getElementById('root'))
+// registerServiceWorker()

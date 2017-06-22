@@ -179,7 +179,7 @@ module.exports = {
         loader: ExtractTextPlugin.extract(
           Object.assign(
             {
-              fallback: require.resolve('style-loader'),
+              fallback: require.resolve('isomorphic-style-loader'),
               use: [
                 {
                   loader: require.resolve('css-loader'),
@@ -187,6 +187,8 @@ module.exports = {
                     importLoaders: 1,
                     minimize: true,
                     sourceMap: true,
+                    modules: true,
+                    localIdentName: '[name]_[local]_[hash:base64:5]'
                   },
                 },
                 {
@@ -229,6 +231,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
+      filename: 'build.html',
       minify: {
         removeComments: true,
         collapseWhitespace: true,

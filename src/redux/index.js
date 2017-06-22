@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import rootReducer from './reducers'
 
@@ -15,5 +15,9 @@ export const configureStore = (initialState, reducer = rootReducer) => {
     middlewares.push(logger)
   }
 
-  return applyMiddleware(...middlewares)(createStore)(reducer, initialState)
+  const enhancers = [
+    applyMiddleware(...middlewares)
+  ]
+
+  return createStore(reducer, initialState, compose(...enhancers))
 }
