@@ -83,6 +83,7 @@
     "flow": "flow",
     "flow-typed": "flow-typed",
     "format-js": "prettier --parser flow --jsx-bracket-same-line --single-quote --no-semi --trailing-comma all --write '{,!(node_modules|public|build|flow-typed)/**/}*.js'",
+    "format-css": "prettier --parser postcss --jsx-bracket-same-line --single-quote --no-semi --trailing-comma all --write '{,!(node_modules|public|build|flow-typed)/**/}*.css'",
     "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {
@@ -118,6 +119,10 @@
   "lint-staged": {
     "src/**/*.js": [
       "prettier --parser flow --jsx-bracket-same-line --single-quote --no-semi --trailing-comma all --write",
+      "git add"
+    ],
+    "src/**/*.css": [
+      "prettier --parser postcss --jsx-bracket-same-line --single-quote --no-semi --trailing-comma all --write",
       "git add"
     ]
   }
