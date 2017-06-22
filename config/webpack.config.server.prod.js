@@ -85,6 +85,7 @@ module.exports = {
             options: {
               importLoaders: 1,
               modules: true,
+              minimize: true,
               localIdentName: '[name]_[local]_[hash:base64:5]'
             }
           }

@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import App from '../src/components/App'
 import WithContext from '../src/helpers/WithContext'
 import { matchPath } from 'react-router-dom'
+import Helmet from 'react-helmet'
 import routes from '../src/routes'
 
 import path from 'path'
@@ -35,28 +36,27 @@ export default function universalLoader(req, res) {
     const context = {}
 
     const store = configureStore()
-    const getHTML = () => renderToString(
-      createElement(
-        WithContext,
-        {
-          onInsertCss: styles => css.push(styles._getCss())
-        },
+    const getHTML = () =>
+      renderToString(
         createElement(
-          Provider,
-          { store },
+          WithContext,
+          {
+            onInsertCss: styles => css.push(styles._getCss())
+          },
           createElement(
-            StaticRouter,
-            { location: req.url, context },
-            createElement(App)
+            Provider,
+            { store },
+            createElement(
+              StaticRouter,
+              { location: req.url, context },
+              createElement(App)
+            )
           )
         )
       )
-    )
 
     // preload data
-    Promise.all(
-      dataLoaders.map(action => action(store))
-    ).then(data => {
+    Promise.all(dataLoaders.map(action => action(store))).then(data => {
       if (context.url) {
         res.writeHead(301, {
           Location: context.url
@@ -66,10 +66,18 @@ export default function universalLoader(req, res) {
         // get html with data
         const html = getHTML()
 
+        const helmet = Helmet.renderStatic()
         const __INITIAL_STATE__ = JSON.stringify(store.getState())
         const inlineStyles = css.join('')
 
+        const metaData = [
+          helmet.title.toString(),
+          helmet.meta.toString(),
+          helmet.link.toString()
+        ].join('')
+
         const criticalHTML = htmlData
+          .replace('[META_DATA]', metaData)
           .replace('[SSR]', html)
           .replace('[INLINE_STYLE]', inlineStyles)
           .replace('[INITIAL_STATE]', __INITIAL_STATE__)
