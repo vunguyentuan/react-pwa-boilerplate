@@ -246,7 +246,8 @@ module.exports = {
     new PreloadWebpackPlugin({
       rel: 'preload',
       as: 'script',
-      include: 'all',
+      include: 'asyncChunks',
+      // fileBlacklist: [/\.whatever/], // default value of this blacklist is [/\.map/]
     }),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
